@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import SearchConnectionsInputField from '../components/SearchConnectionsInputField';
 import ConnectionsService from '../services/ConnectionsService';
+import SearchConnectionsInputField from'../components/SearchConnectionsInputField';
 
 export default class SearchConnections extends Component {
   constructor() {
@@ -171,9 +172,7 @@ export default class SearchConnections extends Component {
               })}
             </div>
            : '' 
-          
           }
-          {this.connectionsList}
       </section>
     );
   }
