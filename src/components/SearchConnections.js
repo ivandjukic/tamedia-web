@@ -9,6 +9,8 @@ export default class SearchConnections extends Component {
       "from": "Tamedia AG, Werdstrasse 21, 8004 Zürich",
       "to": "Biel/Bienne BSG",
       "connectionsData": [],
+      "arrivalTime": "17:15",
+      "numberOfConnections": 4,
       "showSpinner": false
     }
   }
@@ -20,7 +22,12 @@ export default class SearchConnections extends Component {
   }
   fetchConnections = async() => {
     this.setState({showSpinner: true});
-    const connectionsResponse = await ConnectionsService.fetchConnections({from: this.state.from, to: this.state.to});
+    const connectionsResponse = await ConnectionsService.fetchConnections({
+      from: this.state.from, 
+      to: this.state.to,
+      numberOfConnections: this.state.numberOfConnections,
+      arrivalTime: this.state.arrivalTime
+    });
     this.setState({showSpinner: false});
     this.setState({connectionsData: connectionsResponse.data});
   }
@@ -58,6 +65,12 @@ export default class SearchConnections extends Component {
         return null;
     }
   }
+  updateArrivalTime = event => {
+    this.setState({arrivalTime: event.target.value})
+  }
+  updateNumberOfConnections = event => {
+    this.setState({numberOfConnections: event.target.value})
+  }
   render() {
     return (
       <section className="container home mt-5">
@@ -80,6 +93,28 @@ export default class SearchConnections extends Component {
           update={this.setTo} 
           defaultValue={this.state.to}
         />
+        <div className="text-left">
+          <label htmlFor="arrivalTime" className="mr-2">Choose a time for your meeting:</label>
+          <input 
+            type="time" 
+            min="0" 
+            max="23" 
+            id="arrivalTime" 
+            onChange={this.updateArrivalTime} 
+            value={this.state.arrivalTime} 
+          />
+        </div>
+        <div className="text-left">
+          <label htmlFor="numberOfConnections" className="mr-2">Choose a number of connections:</label>
+          <input 
+            type="number" 
+            min="1" 
+            max="16"
+            id="numberOfConnections" 
+            onChange={this.updateNumberOfConnections} 
+            value={this.state.numberOfConnections} 
+          />
+        </div>
         <button 
           type="button" 
           className="btn btn-primary" 
